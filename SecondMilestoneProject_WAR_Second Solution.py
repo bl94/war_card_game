@@ -66,11 +66,11 @@ class Player():
         
     
 def main():
-    #Create players
+    #create players
     player_one=Player("One")
     player_two=Player("Two")
     
-    #New Deck
+    #new Deck
     deck=Deck()
 
     #create deck_of_cards
@@ -84,63 +84,60 @@ def main():
     print("Start a game :")
     game_on=True
     round=1
+    #GAME START
+    #check game on
     while game_on==True:
+        #Check player 1 deck is empty
         if len(player_one.cards)==0:
             print("Congratulions. Win player 2")
             break
+        #Check player 2 deck is empty
         if len(player_two.cards)==0:
             print("Congratulions. Win player 1")
             break
+
         print(f"{round} round") 
-
-        #Battle
-        if player_one.cards[0].value > player_two.cards[0].value:
-            player_one.remove_card()
-            player_two.remove_card()
-            player_one.add_cards(player_one.cards[0])
-            player_one.add_cards(player_two.cards[0])
-            print(f"Win player 1 the {round} round")
-
-        elif player_one.cards[0].value < player_two.cards[0].value:
-
-            player_one.remove_card()
-            player_two.remove_card()
-            player_two.add_cards(player_two.cards[0])
-            player_two.add_cards(player_one.cards[0])
-            print(f"Win player 2 the {round} round")
-
-        else:
-            if len(player_one.cards)<3:
-                print("Player One unable to declare war")
-                print(f"Congratulions. Win player 2")
+        
+        x=0
+        #if  first player's card is equal to second player's cards
+        #is war and we check next cards until if any of player's win round
+        #counter is incremented by 2,because we check every second card
+        while x<26:
+            #Battle
+            #If there is a draw, it is War
+            if x>=2:
+                print("War")
+            #if player 1 card is better than player two card
+            if player_one.cards[x].value > player_two.cards[x].value:
+                player_one.remove_cards(x+1)
+                player_two.remove_cards(x+1)
+                player_one.add_cards(player_one.cards[:x+1])
+                player_one.add_cards(player_two.cards[:x+1])
+                print(f"Win player 1 in the {round} round")
                 break
-
-            elif len(player_two.cards)<3:
-                print("Player Two unable to declare war")
-                print(f"Congratulions. Win player 1")
+            #if player 1 card is better than player two card
+            elif player_one.cards[x].value < player_two.cards[x].value:
+                player_one.remove_cards(x+1)
+                player_two.remove_cards(x+1)
+                player_two.add_cards(player_two.cards[:x+1])
+                player_two.add_cards(player_one.cards[:x+1])
+                print(f"Win player 2 in the {round} round")
                 break
-
-            else:  
-                for x in range(2,52,2):
-                    if player_one.cards[x].value > player_two.cards[x].value:
-                        print("War")
-                        player_one.remove_cards(x+1)
-                        player_two.remove_cards(x+1)
-                        player_one.add_cards(player_one.cards[0:x+1])
-                        player_one.add_cards(player_one.cards[0:x+1])
-                        print(f"Win player 1 the {round} round")
-                        break
-
-                    elif player_one.cards[x].value < player_two.cards[x].value:
-                        print("War")
-                        player_one.remove_cards(x+1)
-                        player_two.remove_cards(x+1)
-                        player_two.add_cards(player_two.cards[0:x+1])
-                        player_two.add_cards(player_one.cards[0:x+1])
-                        print(f"Win player 2 the {round} round")
-                        break
-                    else:
-                        continue
+            #if player 1 card is better than player two card
+            else:
+                if len(player_one.cards)<3:
+                    print("Player One unable to declare war")
+                    print(f"Congratulions. Win player 2")
+                    game_on=False
+                    break
+                elif len(player_two.cards)<3:
+                    print("Player Two unable to declare war")
+                    print(f"Congratulions. Win player 1")
+                    game_on=False
+                    break 
+                else:
+                    x+=2  
+                    continue
         round+=1
 
 
