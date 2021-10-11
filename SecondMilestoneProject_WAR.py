@@ -19,7 +19,6 @@ class Card():
     
     def __str__(self):
         return f"{self.figure} {self.color_card}"
-my_Card=Card("Spades","Two")
 
 class Deck():
     def __init__(self):
@@ -86,16 +85,16 @@ def main():
     game_on=True
     round=1
     while game_on==True:
-        print(f"{round} round")  
         if len(player_one.cards)==0:
             print("Congratulions. Win player 2")
             break
         if len(player_two.cards)==0:
             print("Congratulions. Win player 1")
             break
+        print(f"{round} round") 
 
         #Battle
-        if int(player_one.cards[0].value) > int(player_two.cards[0].value):
+        if player_one.cards[0].value > player_two.cards[0].value:
             win_cards=[]
             win_cards.append(player_one.cards[0])
             win_cards.append(player_two.cards[0])
@@ -104,7 +103,7 @@ def main():
             player_one.add_cards(win_cards)
             print(f"Win player 1 the {round} round")
 
-        elif int(player_one.cards[0].value) < int(player_two.cards[0].value):
+        elif player_one.cards[0].value < player_two.cards[0].value:
             win_cards=[]
             win_cards.append(player_two.cards[0])
             win_cards.append(player_one.cards[0])
@@ -116,33 +115,43 @@ def main():
         else:
             if len(player_one.cards)<3:
                 print("Player One unable to declare war")
-                print(f"Win player 2 the {round} round")
+                print(f"Congratulions. Win player 2")
+                break
+
             elif len(player_two.cards)<3:
-                print("Player One unable to declare war")
-                print(f"Win player 2 the {round} round")
-                
-            for x in range(2,52,2):
-                if int(player_one.cards[x].value) > int(player_two.cards[x].value):
-                    print("War")
-                    win_cards=[]
-                    win_cards.append(player_one.cards[0:x+1])
-                    win_cards.append(player_two.cards[0:x+1])
-                    player_one.remove_cards(x+1)
-                    player_two.remove_cards(x+1)
-                    player_one.add_cards(win_cards)
-                    print(f"Win player 1 the {round} round")
-                    break
-                elif int(player_one.cards[x].value) < int(player_two.cards[x].value):
-                    print("War")
-                    win_cards=[]
-                    win_cards.append(player_two.cards[0:x+1])
-                    win_cards.append(player_one.cards[0:x+1])
-                    player_one.remove_cards(x+1)
-                    player_two.remove_cards(x+1)
-                    player_two.add_cards(win_cards)
-                    print(f"Win player 2 the {round} round")
-                    break
-                else:
-                    continue
+                print("Player Two unable to declare war")
+                print(f"Congratulions. Win player 1")
+                break
+
+            else:  
+                for x in range(2,52,2):
+                    if player_one.cards[x].value > player_two.cards[x].value:
+                        print("War")
+                        win_cards=[]
+                        win_cards.extend(player_one.cards[0:x+1])
+                        win_cards.extend(player_two.cards[0:x+1])
+                        player_one.remove_cards(x+1)
+                        player_two.remove_cards(x+1)
+                        player_one.add_cards(win_cards)
+                        print(f"Win player 1 the {round} round")
+                        break
+
+                    elif player_one.cards[x].value < player_two.cards[x].value:
+                        print("War")
+                        win_cards=[]
+                        win_cards.extend(player_two.cards[0:x+1])
+                        win_cards.extend(player_one.cards[0:x+1])
+                        player_one.remove_cards(x+1)
+                        player_two.remove_cards(x+1)
+                        player_two.add_cards(win_cards)
+                        print(f"Win player 2 the {round} round")
+                        break
+                    else:
+                        continue
         round+=1
-main()
+
+list1=[1,2,3]
+list2=
+list1.extend(list2)
+print(list1)
+#main()
