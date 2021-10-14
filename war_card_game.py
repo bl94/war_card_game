@@ -15,8 +15,7 @@ class Card():
     def __init__(self,color_card,figure):
         self.color_card=color_card
         self.figure=figure
-        #value of card,the higher card has higher the value
-        self.value = cards_and_values[figure]
+        self.value = cards_and_values[figure]#value of card,the higher card has higher the value
 
     def __str__(self):
         return f"{self.figure} {self.color_card}"
@@ -82,27 +81,19 @@ def main():
     """
     main function
     """
-    #create players
-    player_one=Player("One")
-    player_two=Player("Two")
-
-    #new Deck
-    deck=Deck()
-
-    #create deck_of_cards
-    deck.create_deck_cards()
-
-    #shuffle deck
-    deck.shuffle()
-    #split deck
-    player_one.cards=deck.all_of_cards[:26]
-    player_two.cards=deck.all_of_cards[26:53]
+    player_one=Player("One")#create player
+    player_two=Player("Two")#create player
+    deck=Deck()#create Deck
+    deck.create_deck_cards()#create deck_of_cards
+    deck.shuffle()#shuffle deck
+    player_one.cards=deck.all_of_cards[:26]#split deck
+    player_two.cards=deck.all_of_cards[26:53]#split deck
     print("Start a game:")
     game_on=True
     war_round=1
+
     #GAME START
-    #check game on
-    while game_on:
+    while game_on:#check game on
         #Check player one's deck is empty
         #Win player 1
         if len(player_one.cards)==0:
@@ -121,44 +112,40 @@ def main():
         #there is war and check next cards until if any of player win round
         #counter is incremented by 2,because we check every second card
         while card_index<26:
-            #Battle
-            #if there is a draw, it will be War
-            if card_index>=2:
+                #Battle
+            if card_index>=2:#if value of player one's cards is equal to value of player two a draw, it will be War
                 print("War")
-            #if player one's card is better than player two's card
-            if player_one.cards[card_index].value > player_two.cards[card_index].value:
+            if player_one.cards[card_index].value > player_two.cards[card_index].value: #if player one's card is better than player two's card
                 player_one.remove_cards(card_index+1)
                 player_two.remove_cards(card_index+1)
                 player_one.add_cards(player_one.cards[:card_index+1])
                 player_one.add_cards(player_two.cards[:card_index+1])
                 print(f"Win player 1 in the {war_round} round")
                 break
-            #if player two's card is better than player one's card
-            elif player_one.cards[card_index].value < player_two.cards[card_index].value:
+            elif player_one.cards[card_index].value < player_two.cards[card_index].value:#if player two's card is better than player one's card
                 player_one.remove_cards(card_index+1)
                 player_two.remove_cards(card_index+1)
                 player_two.add_cards(player_two.cards[:card_index+1])
                 player_two.add_cards(player_one.cards[:card_index+1])
                 print(f"Win player 2 in the {war_round} round")
                 break
-            #if there is draw
-            else:
+            else:#if there is draw
                 #check how cards player one has
-                #if he has cards less 3 than he loses
+                #if he has less than 3 cards,he loses
                 if len(player_one.cards)<3:
                     print("Player One unable to declare war")
                     print("Congratulions. Win player 2")
                     game_on=False
                     break
                 #check how cards player two has
-                #if he has cards less 3 than he loses
+                #if he has less than 3 cards,he loses
                 elif len(player_two.cards)<3:
                     print("Player Two unable to declare war")
                     print("Congratulions. Win player 1")
                     game_on=False
                     break
-                #if players have more cards than 3
-                #we will take next cards and check again
+                #if players have more than 3 cards
+                #they will take next cards and check again
                 else:
                     card_index+=2
                     continue
