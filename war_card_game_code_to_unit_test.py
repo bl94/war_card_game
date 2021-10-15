@@ -36,7 +36,7 @@ class Deck():
         """
         return len(self.all_of_cards)
 
-    def create_deck_cards(self):
+    def create_deck_of_cards(self):
         """
         create deck
         """
@@ -44,6 +44,11 @@ class Deck():
             for card_figure in figures:
                 new_card=Card(color_card,card_figure)
                 self.all_of_cards.append(new_card)
+        """
+        for unit test add new method
+        """
+    def add_cards_to_deck(self,deck):
+        self.all_of_cards.extend(deck)
 
     def shuffle(self):
         """
@@ -78,17 +83,16 @@ class Player():
         del self.cards[0:card_number+1]
 
 
-def main():
+def main(set_of_cards):
     """
     main function
     """
     player_one=Player("One")#create player
     player_two=Player("Two")#create player
-    deck=Deck()#create Deck
-    deck.create_deck_cards()#create deck_of_cards
-    #deck.shuffle()#shuffle deck
-    player_one.cards=deck.all_of_cards[:26]#split deck
-    player_two.cards=deck.all_of_cards[26:53]#split deck
+    my_deck=Deck()
+    my_deck.add_cards_to_deck(set_of_cards)
+    player_one.cards=my_deck.all_of_cards[:3]#split deck
+    player_two.cards=my_deck.all_of_cards[3:6]#split deck
     print("Start a game:")
     game_on=True
     war_round=1
@@ -133,7 +137,7 @@ def main():
                 print(f"Win player 2 in the {war_round} round")
                 break
             else:#if there is draw
-                #check how many cards player one has
+                #check how many cards player 1 has
                 #if he has less than 3 cards,he loses
                 if len(player_one.cards)<3:
                     print("Player One unable to declare war")
@@ -141,7 +145,7 @@ def main():
                     game_on=False
                     result=2
                     break
-                #check how many cards player two has
+                #check how many cards player 2 has
                 #if he has less than 3 cards,he loses
                 if len(player_two.cards)<3:
                     print("Player Two unable to declare war")
@@ -155,5 +159,8 @@ def main():
                     card_index+=2
                     continue
         war_round+=1
+    return result
 
-main()
+cards=[Card("Spades","Ten"),Card("Hearts","Nine"),Card("Clubs","Eight"),\
+    Card("Hearts","Seven"),Card("Clubs","Six"),Card("Clubs","Five")]
+main(cards)
