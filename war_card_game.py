@@ -86,7 +86,7 @@ def main():
     player_two=Player("Two")#create player
     deck=Deck()#create Deck
     deck.create_deck_cards()#create deck_of_cards
-    #deck.shuffle()#shuffle deck
+    deck.shuffle()#shuffle deck
     player_one.cards=deck.all_of_cards[:26]#split deck
     player_two.cards=deck.all_of_cards[26:53]#split deck
     print("Start a game:")
